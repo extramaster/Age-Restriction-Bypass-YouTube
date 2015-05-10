@@ -1,0 +1,24 @@
+﻿{
+    "manifest_version": 2,
+    "name": "Age Restriction Bypass for YouTube™",
+    "short_name":"agebypass",
+    "version": "0.1.9",
+    "description": "Fast track viewing YouTube videos! - Bypass unfair Age Restrictions set by YouTube",
+    "permissions": ["*://*.youtube.com/watch*","http://*.extramaster.net/"
+    ],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "content_scripts": [{
+        "matches": ["*://*.youtube.com/watch*"
+        ],
+    
+        "run_at" : "document_end",
+        "js": ["lib.js"]
+    }],
+    "icons": {
+        "128": "logo-128.png",
+        "64": "logo-64.png",
+        "48": "logo-48.png",
+        "16": "logo-16.png"
+    }
+
+}
