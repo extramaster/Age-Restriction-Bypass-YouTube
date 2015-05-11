@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Age Restriction Bypass for YouTube™",
     "short_name":"agebypass",
-    "version": "0.1.9",
+    "version": "0.2.0",
     "description": "Fast track viewing YouTube videos! - Bypass unfair Age Restrictions set by YouTube",
     "permissions": ["*://*.youtube.com/watch*","http://*.extramaster.net/"
     ],
