@@ -23,13 +23,17 @@
  *     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *     THE SOFTWARE.
  */
+
+/**
+ * Inline version
+ */
 (function() {
 
     // Use strict to ensure code quality.
     'use strict';
 
     // Check to see if the video has been age restricted. (If it isn't, then what's the point?).
-    if (document.getElementsByClassName('age-restricted').length >= 1 || (document.getElementById('unavailable-submessage') && document.getElementById('unavailable-submessage').innerText.search('age-restricted') !== -1 || document.getElementById('unavailable-submessage').innerText.search('age restricted') !== -1) || document.getElementById('unavailable-submessage') && document.getElementById('unavailable-submessage').innerText.search('inappropriate') !== -1) {
+    if (document.getElementsByClassName('age-restricted').length >= 1 || (document.querySelector('#unavailable-submessage') && document.querySelector('#unavailable-submessage').innerText.search('age-restricted') !== -1 || document.querySelector('#unavailable-submessage').innerText.search('age restricted') !== -1) || document.querySelector('#unavailable-submessage') && document.querySelector('#unavailable-submessage').innerText.search('inappropriate') !== -1) {
 
         // Get the video id from the current YouTube URL.
         var QueryString = function() {
@@ -57,16 +61,18 @@
         try {
 
             // As you can see here, the following code hides and blocks the original video player from showing up.
-            document.getElementById('theater-background').style.display = 'none';
-            var cs = document.getElementById('player-unavailable').childNodes;
+            document.querySelector('#theater-background').style.display = 'none';
+            var cs = document.querySelector('#player-unavailable').childNodes;
             for (var i = 0; i < cs.length; i++) {
                 if (cs[i].style) {
                     cs[i].style.display = 'none';
                     cs[i].style.visibility = 'hidden';
                 }
             }
-            document.getElementById('player-unavailable').style.background = 'black';
-            document.getElementById('player').style.display = 'none';
+            document.querySelector('#player-unavailable').style.background = 'black';
+            document.querySelector('#player').style.display = 'none';
+            document.querySelector('#content').style.maxWidth = '100vw';
+            document.querySelector('div#watch7-sidebar-contents').style.display = 'none';
         } catch (e) {}
 
         // The following step is to inject an iFrame/Embedded version of the video player. This is the actual "bypass".
@@ -74,12 +80,12 @@
 
         // Some custom styling is applied to make the bypass as seamless as possible. This is where this extension really does the legwork.
         var customStyles = document.createElement('style');
-        customStyles.appendChild(document.createTextNode('#watch8-secondary-actions{position: relative;float: left;}#player-unavailable{display:none;}#' + document.getElementById('content').getElementsByClassName('clearfix')[0].getAttribute('id') + ' { position: inherit !important;}#player{height: 390px;}#bypassagerestrict{left: 0px;}'));
+        customStyles.appendChild(document.createTextNode('#watch7-content,#bypassagerestrict{position:relative;left: 2vw;width: 96vw;}'));
         document.documentElement.appendChild(customStyles);
 
         // The video block message is removed, and helpfully replaced with a message from this extension, as a barebones disclaimer.
         try {
-            document.getElementsByClassName('metadata-info')[0].innerHTML = document.getElementsByClassName('metadata-info')[0].innerHTML.replace('This video has been age-restricted based on our <a href="/t/community_guidelines">Community Guidelines</a>', 'Note! This video has had Youtube Age Restriction Bypass automatically bypass the age restriction.<br>If you find the bypassed content disturbing then you can disable or remove the extension to keep it restricted.');
+            document.querySelector('.metadata-info').innerHTML = document.querySelector('.metadata-info').innerHTML.replace('This video has been age-restricted based on our <a href="/t/community_guidelines">Community Guidelines</a>', 'Note! This video has had Youtube Age Restriction Bypass automatically bypass the age restriction.<br>If you find the bypassed content disturbing then you can disable or remove the extension to keep it restricted.');
         } catch (e) {}
     }
 }());
