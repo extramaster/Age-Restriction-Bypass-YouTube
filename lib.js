@@ -1,4 +1,6 @@
 /*
+ ^ Primary project can be found at: https://github.com/extramaster/Age-Restriction-Bypass-YouTube
+ ^
  * The MIT License (MIT)
  * 
  *     Copyright (c) 2015 extramaster, 
@@ -64,11 +66,11 @@
                 }
             }
             document.getElementById('player-unavailable').style.background = 'black';
-            document.getElementById('player').getElementsByClassName('clear')[0].style.display = 'none';
+            document.getElementById('player').style.display = 'none';
         } catch (e) {}
 
         // The following step is to inject an iFrame/Embedded version of the video player. This is the actual "bypass".
-        document.getElementById('player').innerHTML += '<iframe src="' + window.location.toString().split('/')[0] + '//www.youtube.com/embed/' + QueryString.v + '?version=3&autoplay=1&showinfo=0" class="player-width player-height watch-content player-api" id="bypassagerestrict"></iframe>';
+        document.querySelector('#placeholder-player').innerHTML = '<iframe src="' + window.location.toString().split('/')[0] + '//www.youtube.com/embed/' + QueryString.v + '?version=3&autoplay=1&showinfo=0" class="player-width player-height watch-content player-api" id="bypassagerestrict"></iframe>';
 
         // Some custom styling is applied to make the bypass as seamless as possible. This is where this extension really does the legwork.
         var customStyles = document.createElement('style');
