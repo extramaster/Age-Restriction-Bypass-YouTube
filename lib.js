@@ -23,7 +23,6 @@
  *     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *     THE SOFTWARE.
  */
-
 /**
  * Inline version
  */
@@ -80,12 +79,23 @@
 
         // Some custom styling is applied to make the bypass as seamless as possible. This is where this extension really does the legwork.
         var customStyles = document.createElement('style');
-        customStyles.appendChild(document.createTextNode('#watch7-content,#bypassagerestrict{position:relative;left: 2vw;width: 96vw;}'));
+        customStyles.appendChild(document.createTextNode('#watch7-content,#bypassagerestrict{position:relative;left: 2vw;width: 96vw;padding: 0px;border: 0px;margin: 0px;}'));
         document.documentElement.appendChild(customStyles);
 
         // The video block message is removed, and helpfully replaced with a message from this extension, as a barebones disclaimer.
         try {
-            document.querySelector('.metadata-info').innerHTML = document.querySelector('.metadata-info').innerHTML.replace('This video has been age-restricted based on our <a href="/t/community_guidelines">Community Guidelines</a>', 'Note! This video has had Youtube Age Restriction Bypass automatically bypass the age restriction.<br>If you find the bypassed content disturbing then you can disable or remove the extension to keep it restricted.');
+            document.querySelector('.metadata-info').innerHTML = document.querySelector('.metadata-info').innerHTML.replace('This video has been age-restricted based on our <a href="/t/community_guidelines">Community Guidelines</a>', '<p><a href="https://chrome.google.com/webstore/detail/age-restriction-bypass-fo/idcgcddddikdniemhklllnbillohblpn/reviews">Hey! It works! Don\'t be afraid to say hi!</a></p><br>Note! This video has had Youtube Age Restriction Bypass automatically bypass the age restriction.<br>If you find the bypassed content disturbing then you can disable or remove the extension to keep it restricted.');
+        } catch (e) {}
+        try {
+            var allExtendedMetadata = document.querySelectorAll('a.yt-uix-sessionlink');
+            for (i = 0; i < allExtendedMetadata.length; i++) {
+                if (allExtendedMetadata[i].innerHTML.indexOf('Age-restricted video (requested by uploader).') != -1) {
+                    var newRefer = document.createElement('div');
+                    newRefer.innerHTML = '<p><a href="https://chrome.google.com/webstore/detail/age-restriction-bypass-fo/idcgcddddikdniemhklllnbillohblpn/reviews">Hey! It works! Don\'t be afraid to say hi</a></p><br>';
+                    allExtendedMetadata[i].parentNode.insertBefore(newRefer, allExtendedMetadata[i])
+                }
+                allExtendedMetadata[i].innerHTML = allExtendedMetadata[i].innerHTML.replace('Age-restricted video (requested by uploader).', 'Note! This video has had Youtube Age Restriction Bypass automatically bypass the age restriction.<br>If you find the bypassed content disturbing then you can disable or remove the extension to keep it restricted.<a>');
+            }
         } catch (e) {}
     }
 }());
